@@ -1,0 +1,71 @@
+3장 processes
+사실 3장이 중요함. 1장에서는 interrupt 정도가 중요함.
+1장,2장을 이해해야 3장을 이해할 수 있고 이따금씩 5장도 나옴
+
+p2
+여러개의 프로그램이 메모리에 올라오기를 허락한다. 
+-> multiple programs 애들이 우리 메모리에 올라와있다.
+-> concurrently. 같이 돈다. 1장에서 cpu가 프로그램을 돌리다가 device controller에게 일을 부탁하는 것(같이 동작한다)과 비슷한 원리이다. 
+
+간헐적으로 반복되냐 vs 계속 반복되냐를 따져야하는데,
+cpu가 동작하는 방식은 간헐적으로 반복되는 것이고 여기서 computer systems가 multiple programs들을 돌리는 것은 계속 반복되는 것이다. 
+
+Rounded-Robin(일반 용어) -> Time-Sharing(컴퓨터 용어)
+: 일정한 짧은 시간만큼 어떠한 프로세서에게 service를 제공해주고, 바로바로 다음 해결해야하는 프로세서에게 service를 제공하는 것. 이 방식을 사용하면 사용자는 여러 프로그램을 동시에 돌리는 것 처럼 착각하게 된다.
+
+여러개의 프로세서들이 하나의 프로그램에 관여하는 것 처럼 보인다.
+우리가 볼땐 3개의 프로세서였는데, 이것들이 다 합쳐져서 하나의 프로그램에 기여하는 것이다. 
+
+프로그램은 코드 영역과 데이터 영역으로 나뉜다. (2학년 내용)
+-> Text (or code) sections of editors are equivalent
+   But, data sections of editors are distinct
+
+새로운 프로세서는 리눅스 -> fork(), 윈도우 -> create system을 사용하여 만든다. 
+라이브러리는 user program이다. 우리가 c언어를 짤때, 라이브러리는 이미 존재를 한다고 가정하고 코드를 작성한다. 
+예를 들어, #include <stdio.h>를 살펴보면 컴파일이 시작하기 전에 위의 파일을 우리 코드에 다 집어넣는다(include). 그리고 #define을 사용하면 코드를 내려가면서 define한 변수들을 순차적으로 계산한다. 즉 define은 해당 string이 나오면 입력된 변수의 값을 사용하라는 의미인데, Pre-processor의 역할을 나타낸다. 
+
+p3
+그림에서 code == text 같은 말이다. 
+            
+           code text -> code 
+             data -> Data  
+             heap -> Data 
+            stack -> Data 
+
+프로그램의 구조는 다음과 같이 생겼다.  
+data 영역 : 전역변수라는 의미. data의 영역이라는 걸 구분을 잘 해야한다. data,heap,stack을 통틀어서 말하는 것인지 순수 data 영역만 말하는 것인지.
+heap 영역 : 빈 공간
+stack 영역 : 어떠한 데이터가 들어가는 추상적인 공간. 안에 들어가는 데이터가 중요한 게 아니라 구조가 중요하다. 
+지역 변수들이 들어간다. ex) 이클래스에 올라온 hwp 파일 8.3.5 ->p30 -> 변수 d,b가 stack에 push 하면서 저장이 되며 실행이 된다. 해당 실행이 끝나면 pop을 하면서 전 단계로 돌아가는 형식.
+p26 -> e는 결과값으로 40000이 나온다. c랑 d의 주솟값이 둘 다 1000이기 때문에 계산해보면 40000이 나옴을 알 수 있다. 계산해보기
+recurcive 쓰지말기...
+
+p4
+1. New : 클릭클릭 하면 이제 존재하는 것이다. 
+2. Ready : 
+스케쥴러가 "scheduler dispatch to cpu"를 해서 cpu에게 가면 비로소 running이 된 것.
+3. running 상테에서 두부가 없으면 김치찌개를 못 만드니까 쉬어야한다. -> waiting 상태가 된다. 
+4. waiting은 sleep, wait의 상태로서 "C언어에서 enter를 입력하세요.." 등 이벤트를 기다린다. 이벤트가 발생하면 waiting이 끝난다. 
+5. running 상테에서 timeout이 걸리면 다시 ready로 돌아간다. 기다리는 요소가 없기때문에 waiting이 아니라 ready로 가는 것이다. 
+6. waiting 에서 I/O가 왔거나 event가 끝났으면 waiting에서 ready로 갈 수 있다. 
+
+zombie : 죽었는데 아직 안죽어있는 상태. zombie라고 한다. zombie에서 죽은 상태가 되려면 OS가 처리를 해야한다. 그래서 아직 죽지 않은 상태이다. -> teminated
+
+이 부분 많이 틀린다. 그림 부분 잘 보기
+
+p5
+이 그림에서는 Queue가 들어있는데, 총 4가지의 Queue 중 2개의 Queue가 들어있다. 다른 두부 사러 온 애들도 있는데 이 그림에서는 I/O(Sleep) Queue에 해당한다. Ready Queue처럼 준비가 있어야한다.
+
+p6
+우리가 유드림스를 접속할때 이름과 학번을 입력하고 접속하듯이, 프로세서들에도 각각의 기록이 있어야 한다. 
+
+p7
+Data Structure
+
+
+p8
+
+
+
+p9
+

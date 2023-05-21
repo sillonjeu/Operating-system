@@ -1,0 +1,87 @@
+2장. 어떤 서비스를 하나?
+
+p2 OS의 기능
+계속 반복적으로 기능들을 열거 할 것이다. 
+집중적으로 2가지 중요한 기능이 있다. 
+
+p3 
+1. User한테는 편리함을 주겠다. 
+2. 하드웨어를 효율적으로 쓰겠다. 
+-> CPU를 얼마나 효율적으로 쓰는가? (1초도 안쉬고 쓰는 것)
+ex) 찻길이 얼마나 효율적으로 쓰였는가? 50%!
+
+p4 외우세요
+- load 
+- run 
+- end : normally -> terminate(정상적으로 죽을 떄)  
+        abnormally -> abort(비정상적으로 죽을 떄)
+- I/O operations : CPU , mm, device 들이 속도차이가 계속 난다. 이를 해결하기 위해서 전 장에서 device controller에게 맡긴다 등등 여러 방법을 사용함 
+   Block : 덩어리로 정보가 왔다갔다 한다. 
+                근데 여기서 덩어리로 왔다갔다 하는게 중요한데, 
+                하드디스크에서 MM 으로 데이터가 왔다갔다 할때에는 보통 한번에 4KB를 들고온다. 근데 버스가 32bit or 64bit 인데, 이 4KB를 버스로 통째로 보내는게 아니라 pages를 통해서 하드디스크에서 MM으로 데이터를 통째로 보낸다. 나머지 MM에서 캐쉬로 주고받을땐 64bytes, 캐쉬에서 레지스터로 주고받을땐 4bytes(1 word) 단위로 왔다갔다 한다. 
+File-system manipulation : 하드디스크에서 hwp 파일을 찾는다. OS는 이 hwp가 하드디스크의 어디어디에 저장되어있는지 숙지하고 있다. 거기서 Sector000을 찾아서, 이를 MM으로 넘길 때 pages를 사용하는 것이다.
+Arm이라는 것이 HDD에 데이터를 읽기 위해서 HDD 안으로 팔을 뻗는다. 그러면 HDD는 Arm에게 해당 데이터를 읽게 하기 위해 그 저장소 까지 Rotation Latency(판을 돌리는 것) 한다. 이 동작을 통해 Arm에서 Arm time, 찾는데 Seek time, 판을 돌리는 데에서 Rotation Latency time이 걸리는데 이 시간을 어떻게 해야 효율적으로 다를 수 있을지를 고민해야 하는 것이다. 
+
+p5 
+열거된 내용들 굳이 다루진 않겠습니다 
+
+p6 
+Resource allocation
+Accounting 
+Protection and security
+
+p7
+System Calls : OS가 무슨일 하게? 이런이런 일들을 한다! 
+이런 기능을 갖고 있다. 이런 기능을 우리가 System Calls 이라는 형태로 OS에게 일을 시킬 수 있다. 
+
+p9 
+Standard 한 Libraries -> System Calls 
+fopen(); vs open(); -> 왜 이런식으로 나타날까? 다음장! 
+이 수업에서는 Libraries 관점으로 진행된다.
+
+p10 
+read 라는 function이 주어져 있다. 
+read(int fd:file descriptor, void *buf:buffer, size_t count:maximum number)
+fd는 이 프로그램에서 사용하려고 open 한 파일, 혹은 장치의 일련번호.
+count는 몇 byte를 읽어라. 라는 뜻 
+
+p12 
+standard C library 라는 곳에 가면 print 라는 것의 정보가 담겨있다. 
+write()를 하게되면 write() system call을 한다. 
+
+p13 ~ 14 
+밑의 뭉게구름을 좀 더 자세히 표현한 것이다. 
+system call도 일련번호가 있다. write는 몇번 read는 몇번...
+해당 번호에 가면 start address가 존재해서 해당 주소로 가서 System call을 실행하는 것이다. 해당 주소 어딘가에 ex)write() 동작을 실행한다. 
+ex) scanf() / read(모니터에서 값을 읽어들임,*binf,size)
+
+ 
+p15
+parameter? 
+1. System parameter은 어디다 저장해야 하는지?
+2. 우리가 쓰는 user program에서 parameter는 어디다 저장해야 하는지?
+
+p17 ~ 18 
+이런 것들 쭉 읽어보세요. 21가지들.
+21번 가지들의 system calls를 한번 경험해 보세요! 1개씩만!
+
+p19 
+
+p23 
+
+p24 중요한 주제 2가지가 있다.
+방법-2가 더욱 powerful하다. 
+
+command interpreter : shell 이라고도 불린다. 
+Linux의 command line interpreter를 shell이라고 한다. 
+부트로더가 파일을 올릴때에는 기본적인 내용만 가져와서 올린다. 
+
+
+
+
+
+
+
+
+
+
